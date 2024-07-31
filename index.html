@@ -255,8 +255,13 @@
         clearBtn.style.display = username || password ? 'block' : 'none';
     }
 
+    // Flag to prevent going back after login
+    let loggedIn = false;
+
     loginForm.addEventListener('submit', function(event) {
         event.preventDefault();
+        if (loggedIn) return; // Prevent further actions if already logged in
+
         const username = document.getElementById('username').value;
         const password = passwordInput.value;
 
@@ -271,6 +276,7 @@
         }
 
         if (username === 'fv1624' && password === 'fv1624') {
+            loggedIn = true; // Set logged-in flag
             messageElement.textContent = 'Login successful. Redirecting...';
             messageElement.style.display = 'block';
             setTimeout(() => {
