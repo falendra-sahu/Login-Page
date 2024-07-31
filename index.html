@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>F Login Page</title>
+    <title>Login Page F</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
@@ -13,7 +13,7 @@
         }
         body {
             background-color: #080710;
-            overflow: hidden; /* Prevent scrolling */
+            overflow: hidden;
         }
         .background {
             width: 430px;
@@ -23,7 +23,7 @@
             left: 50%;
             top: 50%;
         }
-        .background .shape {
+        .shape {
             height: 200px;
             width: 200px;
             position: absolute;
@@ -72,19 +72,27 @@
             font-size: 16px;
             font-weight: 500;
         }
-        input {
+        .password-container {
+            position: relative;
+            margin-top: 8px;
+        }
+        input[type="text"], input[type="password"] {
             display: block;
             height: 50px;
             width: 100%;
             background-color: rgba(255, 255, 255, 0.07);
             border-radius: 3px;
             padding: 0 10px;
-            margin-top: 8px;
             font-size: 14px;
             font-weight: 300;
         }
-        ::placeholder {
-            color: #e5e5e5;
+        .show-password {
+            position: absolute;
+            right: 10px;
+            top: 15px;
+            cursor: pointer;
+            color: #ffffff;
+            display: none; /* Initially hidden */
         }
         button {
             margin-top: 50px;
@@ -128,18 +136,17 @@
             font-size: 14px;
             color: white;
             font-weight: bold;
-            font-family: Calibri, sans-serif; /* Set Calibri font for the rest of footer */
+            font-family: Calibri, sans-serif;
         }
         .powered-by {
-            font-family: Calibri, sans-serif; /* Set Calibri font for "Powered by" */
+            font-family: Calibri, sans-serif;
         }
         .falendra {
             color: white;
             font-weight: bold;
-            font-family: 'Poppins', sans-serif; /* Set Poppins font for "Falendra Sahu" text */
+            font-family: 'Poppins', sans-serif;
         }
 
-        /* Responsive styles */
         @media (max-width: 480px) {
             .background {
                 width: 90vw;
@@ -181,7 +188,10 @@
     <label for="username">Username</label>
     <input type="text" placeholder="Email or Phone" id="username">
     <label for="password">Password</label>
-    <input type="password" placeholder="Password" id="password">
+    <div class="password-container">
+        <input type="password" placeholder="Password" id="password">
+        <i class="fas fa-eye show-password" id="togglePassword"></i>
+    </div>
     <button type="submit">Log In</button>
     <div class="social">
         <div class="go"><i class="fab fa-google"></i> Google</div>
@@ -197,11 +207,18 @@
 <script>
     const loginForm = document.getElementById('loginForm');
     const messageElement = document.getElementById('message');
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+
+    // Show toggle icon based on input
+    passwordInput.addEventListener('input', function() {
+        togglePassword.style.display = passwordInput.value ? 'block' : 'none';
+    });
 
     loginForm.addEventListener('submit', function(event) {
         event.preventDefault();
         const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
+        const password = passwordInput.value;
 
         if (username === 'fv1624' && password === 'fv1624') {
             messageElement.textContent = 'Login successful. Redirecting...';
@@ -216,6 +233,12 @@
                 messageElement.style.display = 'none';
             }, 2000);
         }
+    });
+
+    togglePassword.addEventListener('click', function() {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        this.classList.toggle('fa-eye-slash');
     });
 </script>
 </body>
